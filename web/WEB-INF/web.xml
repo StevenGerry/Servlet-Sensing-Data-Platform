@@ -4,9 +4,17 @@
         <servlet-name>DataServlet</servlet-name>
         <servlet-class>DataServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchBusServlet</servlet-name>
+        <servlet-class>SearchBusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DataServlet</servlet-name>
         <url-pattern>/data</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>SearchBusServlet</servlet-name>
+        <url-pattern>/bus</url-pattern>
     </servlet-mapping> 
  
 </web-app>
