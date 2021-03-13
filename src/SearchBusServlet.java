@@ -33,7 +33,7 @@ public class SearchBusServlet extends HttpServlet {
 	    String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=***";
 		String userName = "sa";
-		String userPwd = "********";
+		String userPwd = "******";
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String time = new SimpleDateFormat("hh:mm:ss").format(new Date());
         String logAPI = "SearchBusServlet";
@@ -80,7 +80,7 @@ public class SearchBusServlet extends HttpServlet {
 	        result.put("success", true);  
 	        result.put("businfo", businfo); 
 			
-			String sql = "select TOP(10) data_buspassenger.busnumber,data_buspassenger.timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2,data_buspassenger.passenger from data_buspassenger,data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') and data_buspassenger.uuid=data_co2sensors.uuid order by timeline DESC ";
+			String sql = "select TOP(10) data_buspassenger.uuid,data_buspassenger.busnumber,data_buspassenger.timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2,data_buspassenger.passenger from data_buspassenger,data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') and data_buspassenger.uuid=data_co2sensors.uuid order by timeline DESC ";
 	        JSONArray jsonArray = new JSONArray();
 	        try {
 				ResultSet rs = null;
@@ -90,6 +90,7 @@ public class SearchBusServlet extends HttpServlet {
 				int i=0;
 				while(rs.next()) {
 					 JSONObject sensor = new JSONObject();  
+					 sensor.put("uuid", rs.getString("uuid")); 
 					 sensor.put("busnumber", rs.getString("busnumber"));  
 					 sensor.put("timeline", rs.getString("timeline"));  
 				     sensor.put("sensorid", rs.getString("sensorid"));
