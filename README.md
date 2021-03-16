@@ -18,6 +18,9 @@ Server Platform : Tomcat 7.0
 
 3.Show in the webpage as tables and graphics.
 
+## TEST WEBSITE
+http://bus.hwhhome.net:8080/platform/index.html
+
 
 ## About
 
