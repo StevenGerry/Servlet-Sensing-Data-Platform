@@ -23,9 +23,9 @@ $(function () {
     initTable();
     setInterval(initTable, 1000 * 10);
     setInterval(tick, 1000);
-    if ($("#searchBus").val() != "")
+    if ($("#searchBus").val() !== "")
     {
-        setInterval(searchPost, 1000);
+        setInterval(searchPost, 100);
     }
 
 });
@@ -38,10 +38,10 @@ function searchPost(){
         type:'POST',
         dataType:"json",
         contentType: "application/json",
-        url:'http://bus.hwhhome.net:8080/bus',
+        url:'http://192.168.3.101:8080/bus',
         data:JSON.stringify(searchName),
         success:function(data){
-            console.log(data);
+            console.log("searchPost:"+data);
             var obj = console.log(jQuery.parseJSON(data.toString()));
         }
     });
@@ -152,6 +152,10 @@ function mySort(data){
 function initTable() {
     taskSizeTj();
     syncTj();
+    if ($("#searchBus").val() !== "")
+    {
+        searchPost();
+    }
     var HTML = "<thead>\n" +
         "        <td title=\"車ナンバー\">車ナンバー</td>\n" +
         "        <td title=\"時間\">時間</td>\n" +
@@ -192,17 +196,11 @@ function initTable() {
     });
     HTML += "</tbody>";
     $('.commonTable').html(HTML);
-
     $("#busNumberArea").text(busNumber);
-
     $("#averageCo2Area").text(co2Number);
-
     $("#passengerArea").text(passNumber);
-
     delayNum = 1;
-
     $("#statusArea").html("<font color='#00cc00'>やや混雑</font>");
-
     $('.commonTable tbody tr').hide()
         .filter(":contains('" + ($("#searchText").val()) + "')").show();
 
