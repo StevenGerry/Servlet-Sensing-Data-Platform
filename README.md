@@ -18,6 +18,14 @@ Server Platform : Tomcat 7.0
 
 3.Show in the webpage as tables and graphics.
 
+## TEST WEBSITE
+http://bus.hwhhome.net:8080/platform/index.html
+
+## Project Paper
+Bus Crowdedness Sensing Based on Deep Learning, 
+Wenhao Huang , Akira Tsuge , Yin Chen , Tadashi Okoshi , Jin Nakazawa 研究報告ユビキタスコンピューティングシステム（UBI）,2021-UBI-69(1),1-7 (2021-02-22) , 2188-8698
+http://id.nii.ac.jp/1001/00209517/
+
 
 ## About
 
