@@ -38,11 +38,12 @@ function searchPost(){
         type:'POST',
         dataType:"json",
         contentType: "application/json",
-        url:'http://192.168.3.101:8080/bus',
+        url:'http://bus.hwhhome.net:8080/bus',
         data:JSON.stringify(searchName),
         success:function(data){
             console.log("searchPost:"+data);
-            var obj = console.log(jQuery.parseJSON(data.toString()));
+            var obj = console.log(JSON.parse(JSON.stringify(data)));
+
         }
     });
 }
