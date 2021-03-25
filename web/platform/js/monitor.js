@@ -6,6 +6,7 @@ var todayNoSyncNum = 0;
 var delayNum = 0;
 var co2_public = 0;
 var searchboxtext = "";
+var public_json = null;
 
 $(function () {
     $('input').bind('input propertychange', function () {
@@ -42,8 +43,8 @@ function searchPost(){
         data:JSON.stringify(searchName),
         success:function(data){
             console.log("searchPost:"+data);
-            var obj = console.log(JSON.parse(JSON.stringify(data)));
-
+            var obj = JSON.parse(JSON.stringify(data));
+            public_json = obj;
         }
     });
 }
@@ -170,31 +171,52 @@ function initTable() {
         "        <td title=\"運行情報\">運行情報</td>\n" +
         "        </thead>\n" +
         "        <tbody>\n";
-    var data = getData();
-    var myData = mySort(data);
+    var data = public_json;
+    // var myData = mySort(data);
     var busNumber = "";
     var co2Number = 0;
     var passNumber = "";
     var count = 0;
-    $(myData).each(function (index, ele) {
-        HTML += "<tr>\n" +
-            "            <td>" + ele['busnumber'] + "</td>\n" +
-            "            <td>" + ele['timeline'] + "</td>\n" +
-            "            <td>" + ele['sensorid'] + "</td>\n" +
-            "            <td>" + ele['sensignal'] + "</td>\n" +
-            "            <td>" + ele['senbattery'] + "</td>\n" +
-            "            <td>" + ele['sentemp'] + "</td>\n" +
-            "            <td>" + ele['senhumi'] + "</td>\n" +
-            "            <td>" + ele['senco2'] + "</td>\n" +
-            "            <td>" + ele['passenger'] + "</td>\n" +
-            "            <td>" + ele['businfo'] + "</td>\n";
-        count ++;
-        busNumber = ele['busnumber'];
-        co2Number = (co2Number+ parseInt(ele['senco2']))/(count+1);
-        passNumber = ele['passenger'];
-        co2_public = co2Number;
-        console.log(busNumber.toString()+co2Number.toString()+passNumber.toString());
-    });
+    if (public_json != null) {
+        for (var i = 0; i < public_json.data.length; i++) {
+            HTML += "<tr>\n" +
+                "            <td>" + public_json.data[i].busnumber + "</td>\n" +
+                "            <td>" + public_json.data[i].timeline + "</td>\n" +
+                "            <td>" + public_json.data[i].sensorid + "</td>\n" +
+                "            <td>" + public_json.data[i].sensignal + "</td>\n" +
+                "            <td>" + public_json.data[i].senbattery + "</td>\n" +
+                "            <td>" + public_json.data[i].sentemp + "</td>\n" +
+                "            <td>" + public_json.data[i].senhumi + "</td>\n" +
+                "            <td>" + public_json.data[i].senco2 + "</td>\n" +
+                "            <td>" + public_json.data[i].passenger + "</td>\n" +
+                "            <td>" + public_json.businfo + "</td>\n";
+            count++;
+            busNumber = public_json.data[i].busnumber;
+            co2Number = (co2Number + parseInt(public_json.data[i].senco2)) / (count + 1);
+            passNumber = public_json.data[i].passenger;
+            co2_public = co2Number;
+            console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
+        }
+    }
+    // $(myData).each(function (index, ele) {
+    //     HTML += "<tr>\n" +
+    //         "            <td>" + ele['busnumber'] + "</td>\n" +
+    //         "            <td>" + ele['timeline'] + "</td>\n" +
+    //         "            <td>" + ele['sensorid'] + "</td>\n" +
+    //         "            <td>" + ele['sensignal'] + "</td>\n" +
+    //         "            <td>" + ele['senbattery'] + "</td>\n" +
+    //         "            <td>" + ele['sentemp'] + "</td>\n" +
+    //         "            <td>" + ele['senhumi'] + "</td>\n" +
+    //         "            <td>" + ele['senco2'] + "</td>\n" +
+    //         "            <td>" + ele['passenger'] + "</td>\n" +
+    //         "            <td>" + ele['businfo'] + "</td>\n";
+    //     count ++;
+    //     busNumber = ele['busnumber'];
+    //     co2Number = (co2Number+ parseInt(ele['senco2']))/(count+1);
+    //     passNumber = ele['passenger'];
+    //     co2_public = co2Number;
+    //     console.log(busNumber.toString()+co2Number.toString()+passNumber.toString());
+    // });
     HTML += "</tbody>";
     $('.commonTable').html(HTML);
     $("#busNumberArea").text(busNumber);
@@ -239,35 +261,4 @@ function showLocale(objD){
 
 function hideBugBtn() {
     $("#bugBtn").hide();
-}
-
-function getData() {
-    return {
-        "flag": true,
-        "4708e673-bc77-4922-b0cf-76107a236e11": {
-            "busnumber": "SHOUNAN330A7040",
-            "passenger": "5",
-            "senbattery": "2.75",
-            "senco2": "876",
-            "senhumi": "27.5",
-            "sensignal": "159",
-            "sensorid": "2165032249",
-            "sentemp": "21.4",
-            "timeline": "2021-03-04 11:09:09",
-            "businfo": "湘南台-慶応大学",
-        },
-        "06e6d9bb-a18a-4f60-86ae-1bbf133a14fd": {
-            "busnumber": "SHOUNAN330A7040",
-            "passenger": "6",
-            "senbattery": "2.76",
-            "senco2": "873",
-            "senhumi": "27.5",
-            "sensignal": "159",
-            "sensorid": "2165032249",
-            "sentemp": "21.5",
-            "timeline": "2021-03-04 11:09:14",
-            "businfo": "湘南台-慶応大学",
-        },
-        "delay": 0
-    };
 }
