@@ -22,8 +22,8 @@ $(function () {
         searchPost();
     });
     initTable();
-    setInterval(initTable, 1000 * 10);
-    setInterval(tick, 1000);
+    setInterval(initTable, 500);
+    setInterval(tick, 500);
     if ($("#searchBus").val() !== "")
     {
         setInterval(searchPost, 100);
@@ -68,7 +68,7 @@ function syncTj() {
     var data0 = option.series[0].data;//本次
 
     data0.shift();//删除第一个
-    data0.push(200);//追加一个新数据
+    data0.push(co2_public);//追加一个新数据
 
     option.xAxis[0].data.shift();
     option.xAxis[0].data.push( today.getMinutes() + ":" + today.getSeconds());//更新x轴
@@ -175,6 +175,7 @@ function initTable() {
     // var myData = mySort(data);
     var busNumber = "";
     var co2Number = 0;
+    var co2sum = 0;
     var passNumber = "";
     var count = 0;
     if (public_json != null) {
@@ -192,11 +193,13 @@ function initTable() {
                 "            <td>" + public_json.businfo + "</td>\n";
             count++;
             busNumber = public_json.data[i].busnumber;
-            co2Number = (co2Number + parseInt(public_json.data[i].senco2)) / (count + 1);
+            co2sum = co2sum + parseInt(public_json.data[i].senco2)
+            co2Number = co2sum / public_json.data.length
+            console.log(co2sum);
             passNumber = public_json.data[i].passenger;
-            co2_public = co2Number;
             console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
         }
+        co2_public = co2Number;
     }
     // $(myData).each(function (index, ele) {
     //     HTML += "<tr>\n" +
