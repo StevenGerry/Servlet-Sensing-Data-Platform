@@ -226,10 +226,24 @@ function initTable() {
     $("#averageCo2Area").text(co2Number);
     $("#passengerArea").text(passNumber);
     delayNum = 1;
-    $("#statusArea").html("<font color='#00cc00'>やや混雑</font>");
-    $('.commonTable tbody tr').hide()
-        .filter(":contains('" + ($("#searchText").val()) + "')").show();
-
+    if (parseInt(passNumber)<=10)
+    {
+        $("#statusArea").html("<font color='#00cc00'>やや混雑</font>");
+        $('.commonTable tbody tr').hide()
+            .filter(":contains('" + ($("#searchText").val()) + "')").show();
+    }
+    else if(parseInt(passNumber)>10&&parseInt(passNumber)<=40)
+    {
+        $("#statusArea").html("<font color='#00cc00'>混雑</font>");
+        $('.commonTable tbody tr').hide()
+            .filter(":contains('" + ($("#searchText").val()) + "')").show();
+    }
+    else
+    {
+        $("#statusArea").html("<font color='#00cc00'>ーーー</font>");
+        $('.commonTable tbody tr').hide()
+            .filter(":contains('" + ($("#searchText").val()) + "')").show();
+    }
 }
 
 function showLocale(objD){
