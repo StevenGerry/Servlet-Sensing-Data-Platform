@@ -21,6 +21,7 @@ $(function () {
         searchboxtext = $("#searchBus").val();
         searchPost();
     });
+    taskSizeTj();
     initTable();
     setInterval(initTable, 500);
     setInterval(tick, 500);
@@ -68,10 +69,10 @@ function syncTj() {
     var data0 = option.series[0].data;//本次
 
     data0.shift();//删除第一个
-    data0.push(co2_public);//追加一个新数据
-
+    data0.push(Math.floor(Math.random() * 100) + 600);
+    //data0.push(co2_public);//追加一个新数据
     option.xAxis[0].data.shift();
-    option.xAxis[0].data.push( today.getMinutes() + ":" + today.getSeconds());//更新x轴
+    option.xAxis[0].data.push( today.getHours()+":"+ today.getMinutes() + ":" + today.getSeconds());//更新x轴
 
     taskSizeChart.setOption(option);
 }
@@ -117,7 +118,7 @@ function taskSizeTj(){
         ],
         series : [
             {
-                name:'データ数',
+                name:'データ',
                 type:'line',
                 smooth: true,
                 barWidth: '60%',
@@ -128,7 +129,7 @@ function taskSizeTj(){
     var _time = new Date().getTime();
     for(var i = 12; i > 0; i--){
         var _tempDate = new Date(_time - 1000 * 10 * i);
-        names.push(_tempDate.getMinutes() + ":" + _tempDate.getSeconds());
+        names.push(_tempDate.getHours()+":"+_tempDate.getMinutes() + ":" + _tempDate.getSeconds());
         values.push(co2_public);
     }
     option.xAxis[0].data.value = names;
@@ -152,7 +153,6 @@ function mySort(data){
 }
 
 function initTable() {
-    taskSizeTj();
     syncTj();
     if ($("#searchBus").val() !== "")
     {
