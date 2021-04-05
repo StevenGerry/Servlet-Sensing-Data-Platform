@@ -16,7 +16,7 @@ Server Platform : Tomcat 7.0
 
 2.Saving the data in the SqlServer.  --Finished
 
-3.Show in the webpage as tables and graphics.
+3.Show in the webpage as tables and graphics.  --Finished
 
 ## TEST WEBSITE
 http://bus.hwhhome.net:8080/platform/index.html
