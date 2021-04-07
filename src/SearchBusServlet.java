@@ -101,7 +101,7 @@ public class SearchBusServlet extends HttpServlet {
 				     sensor.put("senco2", rs.getString("senco2"));
 				     sensor.put("passenger", rs.getString("passenger"));
 				     jsonArray.add(i++, sensor);
-				     System.out.println(log+""+i+""+jsonArray.toString());	
+				     //System.out.println(log+""+i+""+jsonArray.toString());	
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -111,7 +111,7 @@ public class SearchBusServlet extends HttpServlet {
 	        
 	        String Message = result.toJSONString();
 	        String jsonStr = "{\"status\":\"success\"}";
-	        System.out.println(log+"POST:"+bus_id+", RETURN:"+jsonStr+"-"+Message);
+	        System.out.println(log+"Search_POST:"+bus_id+", RETURN:"+jsonStr);
 	        response.getWriter().write(Message);
 	    } catch (Exception e) {
 	    	String jsonStr = "{\"status\":\"error\"}";

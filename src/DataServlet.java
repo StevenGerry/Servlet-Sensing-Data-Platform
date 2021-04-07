@@ -93,9 +93,11 @@ public class DataServlet extends HttpServlet {
 	        	stmt_passenger.executeUpdate();
 	        }
 	        String jsonStr = "{\"status\":\"success\"}";
+	        System.out.println(log+jsonStr);
 	        response.getWriter().write(jsonStr);
 	    } catch (Exception e) {
 	    	String jsonStr = "{\"status\":\"error\"}";
+	    	System.out.println(log+jsonStr);
 	    	response.getWriter().write(jsonStr);
 	        e.printStackTrace();
 	    } finally{
