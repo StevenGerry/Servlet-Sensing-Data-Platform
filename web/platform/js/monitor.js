@@ -74,7 +74,7 @@ function syncTj() {
     //data0.push(Math.floor(Math.random() * 100) + 600);
     data0.push(co2_public);//追加一个新数据
     option.xAxis[0].data.shift();
-    option.xAxis[0].data.push( today.getHours()+":"+ today.getMinutes() + ":" + today.getSeconds());//更新x轴
+    option.xAxis[0].data.push(today.getMinutes() + ":" + today.getSeconds());//更新x轴
 
     taskSizeChart.setOption(option);
 }
@@ -131,7 +131,7 @@ function taskSizeTj(){
     var _time = new Date().getTime();
     for(var i = 20; i > 0; i--){
         var _tempDate = new Date(_time - 1000 * 10 * i);
-        names.push(_tempDate.getHours()+":"+_tempDate.getMinutes() + ":" + _tempDate.getSeconds());
+        names.push(_tempDate.getMinutes() + ":" + _tempDate.getSeconds());
         values.push(co2_public);
     }
     option.xAxis[0].data.value = names;
