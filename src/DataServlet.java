@@ -27,9 +27,9 @@ public class DataServlet extends HttpServlet {
 	    String acceptjson = "";
 	    //SQL Connection
 	    String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=***";
+		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=KANACHU";
 		String userName = "sa";
-		String userPwd = "******";
+		String userPwd = "p#uK2eW!";
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String time = new SimpleDateFormat("hh:mm:ss").format(new Date());
         String logAPI = "DataServlet";
@@ -83,12 +83,12 @@ public class DataServlet extends HttpServlet {
 	        	passengers[i] = JSenseDataObject.getString("passengers");
 	        	busnumber[i] = JSenseDataObject.getString("busnumber");
 	        	String sql_co2 = "insert into data_co2sensors (uuid,timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2) values ('"+uuid[i]+"','"+timeline[i]+"','"+sensorid[i]+"','"+sensignal[i]+"','"+senbattery[i]+"','"+sentemp[i]+"','"+senhumi[i]+"','"+senco2[i]+"')";
-	        	System.out.println(log+sql_co2);
+	        	//System.out.println(log+sql_co2);
 	        	PreparedStatement stmt_co2 = dbConn.prepareStatement(sql_co2);
 	        	stmt_co2.executeUpdate();
 	        	String sql_passenger = "insert into data_buspassenger (uuid,timeline,busnumber,passenger) "
 	        			+ "values ('"+uuid[i]+"','"+timeline[i]+"','"+busnumber[i]+"','"+passengers[i]+"')";
-	        	System.out.println(log+sql_passenger);
+	        	//System.out.println(log+sql_passenger);
 	        	PreparedStatement stmt_passenger = dbConn.prepareStatement(sql_passenger);
 	        	stmt_passenger.executeUpdate();
 	        }
