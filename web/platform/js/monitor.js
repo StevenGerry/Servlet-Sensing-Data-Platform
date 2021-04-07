@@ -24,6 +24,8 @@ $(function () {
     taskSizeTj();
     initTable();
     setInterval(initTable, 500);
+    syncTj();
+    setInterval(syncTj, 5000);
     setInterval(tick, 500);
     if ($("#searchBus").val() !== "")
     {
@@ -69,8 +71,8 @@ function syncTj() {
     var data0 = option.series[0].data;//本次
 
     data0.shift();//删除第一个
-    data0.push(Math.floor(Math.random() * 100) + 600);
-    //data0.push(co2_public);//追加一个新数据
+    //data0.push(Math.floor(Math.random() * 100) + 600);
+    data0.push(co2_public);//追加一个新数据
     option.xAxis[0].data.shift();
     option.xAxis[0].data.push( today.getHours()+":"+ today.getMinutes() + ":" + today.getSeconds());//更新x轴
 
@@ -118,7 +120,7 @@ function taskSizeTj(){
         ],
         series : [
             {
-                name:'データ',
+                name:'CO2データ',
                 type:'line',
                 smooth: true,
                 barWidth: '60%',
@@ -127,7 +129,7 @@ function taskSizeTj(){
         ]
     };
     var _time = new Date().getTime();
-    for(var i = 12; i > 0; i--){
+    for(var i = 20; i > 0; i--){
         var _tempDate = new Date(_time - 1000 * 10 * i);
         names.push(_tempDate.getHours()+":"+_tempDate.getMinutes() + ":" + _tempDate.getSeconds());
         values.push(co2_public);
@@ -153,7 +155,7 @@ function mySort(data){
 }
 
 function initTable() {
-    syncTj();
+    //syncTj();
     if ($("#searchBus").val() !== "")
     {
         searchPost();
@@ -193,8 +195,10 @@ function initTable() {
                 "            <td>" + public_json.businfo + "</td>\n";
             count++;
             busNumber = public_json.data[i].busnumber;
-            co2sum = co2sum + parseInt(public_json.data[i].senco2)
-            co2Number = co2sum / public_json.data.length
+            if (count<11) {
+                co2sum = co2sum + parseInt(public_json.data[i].senco2)
+            }
+            co2Number = co2sum / 10.00
             console.log(co2sum);
             passNumber = public_json.data[i].passenger;
             console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
