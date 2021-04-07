@@ -31,9 +31,9 @@ public class SearchBusServlet extends HttpServlet {
 	    String acceptjson = "";
 	    //SQL Connection
 	    String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=";
+		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=***";
 		String userName = "sa";
-		String userPwd = "";
+		String userPwd = "******";
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String time = new SimpleDateFormat("hh:mm:ss").format(new Date());
         String logAPI = "SearchBusServlet";
