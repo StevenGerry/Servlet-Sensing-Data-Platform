@@ -129,7 +129,10 @@ function taskSizeTj(){
     var _time = new Date().getTime();
     for(var i = 20; i > 0; i--){
         var _tempDate = new Date(_time - 1000 * 10 * i);
-        names.push(_tempDate.getMinutes() + ":" + _tempDate.getSeconds());
+        if (_tempDate.getSeconds()<10)
+            names.push(_tempDate.getMinutes() + ":0" + _tempDate.getSeconds());
+        else
+            names.push(_tempDate.getMinutes() + ":" + _tempDate.getSeconds());
         values.push(co2_public);
     }
     option.xAxis[0].data.value = names;
