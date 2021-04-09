@@ -1,8 +1,5 @@
 var taskSizeChart = echarts.init(document.getElementById('taskSize'));
 var startTime = new Date();
-
-var todaySyncedNum = 0;
-var todayNoSyncNum = 0;
 var delayNum = 0;
 var co2_public = 0;
 var searchboxtext = "";
@@ -71,11 +68,12 @@ function syncTj() {
     var data0 = option.series[0].data;//本次
 
     data0.shift();//删除第一个
-    //data0.push(Math.floor(Math.random() * 100) + 600);
     data0.push(co2_public);//追加一个新数据
     option.xAxis[0].data.shift();
-    option.xAxis[0].data.push(today.getMinutes() + ":" + today.getSeconds());//更新x轴
-
+    if(today.getSeconds()<10)
+        option.xAxis[0].data.push(today.getMinutes() + ":0" + today.getSeconds());//更新x轴
+    else
+        option.xAxis[0].data.push(today.getMinutes() + ":" + today.getSeconds());//更新x轴
     taskSizeChart.setOption(option);
 }
 
