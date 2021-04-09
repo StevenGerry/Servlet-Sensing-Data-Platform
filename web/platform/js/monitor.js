@@ -195,35 +195,14 @@ function initTable() {
                 "            <td>" + public_json.businfo + "</td>\n";
             count++;
             busNumber = public_json.data[i].busnumber;
-            if (count<11) {
-                co2sum = co2sum + parseInt(public_json.data[i].senco2)
-            }
-            co2Number = co2sum / 10.00
+            co2sum = co2sum + parseInt(public_json.data[i].senco2)
+            co2Number = co2sum / public_json.data.length
             console.log(co2sum);
             passNumber = public_json.data[i].passenger;
             console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
         }
         co2_public = co2Number;
     }
-    // $(myData).each(function (index, ele) {
-    //     HTML += "<tr>\n" +
-    //         "            <td>" + ele['busnumber'] + "</td>\n" +
-    //         "            <td>" + ele['timeline'] + "</td>\n" +
-    //         "            <td>" + ele['sensorid'] + "</td>\n" +
-    //         "            <td>" + ele['sensignal'] + "</td>\n" +
-    //         "            <td>" + ele['senbattery'] + "</td>\n" +
-    //         "            <td>" + ele['sentemp'] + "</td>\n" +
-    //         "            <td>" + ele['senhumi'] + "</td>\n" +
-    //         "            <td>" + ele['senco2'] + "</td>\n" +
-    //         "            <td>" + ele['passenger'] + "</td>\n" +
-    //         "            <td>" + ele['businfo'] + "</td>\n";
-    //     count ++;
-    //     busNumber = ele['busnumber'];
-    //     co2Number = (co2Number+ parseInt(ele['senco2']))/(count+1);
-    //     passNumber = ele['passenger'];
-    //     co2_public = co2Number;
-    //     console.log(busNumber.toString()+co2Number.toString()+passNumber.toString());
-    // });
     HTML += "</tbody>";
     $('.commonTable').html(HTML);
     $("#busNumberArea").text(busNumber);
