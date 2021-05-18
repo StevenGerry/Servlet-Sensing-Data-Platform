@@ -183,24 +183,36 @@ function initTable() {
     var count = 0;
     if (public_json != null) {
         for (var i = 0; i < public_json.data.length; i++) {
-            HTML += "<tr>\n" +
-                "            <td>" + public_json.data[i].busnumber + "</td>\n" +
-                "            <td>" + public_json.data[i].timeline + "</td>\n" +
-                "            <td>" + public_json.data[i].sensorid + "</td>\n" +
-                "            <td>" + public_json.data[i].sensignal + "</td>\n" +
-                "            <td>" + public_json.data[i].senbattery + "</td>\n" +
-                "            <td>" + public_json.data[i].sentemp + "</td>\n" +
-                "            <td>" + public_json.data[i].senhumi + "</td>\n" +
-                "            <td>" + public_json.data[i].senco2 + "</td>\n" +
-                "            <td>" + public_json.data[i].passenger + "</td>\n" +
-                "            <td>" + public_json.businfo + "</td>\n";
-            count++;
-            busNumber = public_json.data[i].busnumber;
-            co2sum = co2sum + parseInt(public_json.data[i].senco2)
-            co2Number = co2sum / public_json.data.length
-            console.log(co2sum);
-            passNumber = public_json.data[i].passenger;
-            console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
+            var datadate = public_json.data[i].timeline.toString();
+            datadate = datadate.substring(0,19);
+            datadate = datadate.replace(/-/g,'/');
+            var datatimestamp = new Date(datadate).getTime();
+            var now =  new Date();
+            var TTL = now - datatimestamp;
+            if (TTL <= 300) {
+                HTML += "<tr>\n" +
+                    "            <td>" + public_json.data[i].busnumber + "</td>\n" +
+                    "            <td>" + public_json.data[i].timeline + "</td>\n" +
+                    "            <td>" + public_json.data[i].sensorid + "</td>\n" +
+                    "            <td>" + public_json.data[i].sensignal + "</td>\n" +
+                    "            <td>" + public_json.data[i].senbattery + "</td>\n" +
+                    "            <td>" + public_json.data[i].sentemp + "</td>\n" +
+                    "            <td>" + public_json.data[i].senhumi + "</td>\n" +
+                    "            <td>" + public_json.data[i].senco2 + "</td>\n" +
+                    "            <td>" + public_json.data[i].passenger + "</td>\n" +
+                    "            <td>" + public_json.businfo + "</td>\n";
+                count++;
+                busNumber = public_json.data[i].busnumber;
+                co2sum = co2sum + parseInt(public_json.data[i].senco2)
+                co2Number = co2sum / public_json.data.length
+                console.log(co2sum);
+                passNumber = public_json.data[i].passenger;
+                console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
+            }
+            else
+            {
+                console.log("ERR: Out Lifetime");
+            }
         }
         co2_public = co2Number;
     }
