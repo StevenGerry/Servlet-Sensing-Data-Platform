@@ -189,7 +189,8 @@ function initTable() {
             var datatimestamp = new Date(datadate).getTime();
             var now =  new Date();
             var TTL = now - datatimestamp;
-            if (TTL <= 300) {
+            console.log(TTL.toString());
+            if (TTL <= 10000000) {
                 HTML += "<tr>\n" +
                     "            <td>" + public_json.data[i].busnumber + "</td>\n" +
                     "            <td>" + public_json.data[i].timeline + "</td>\n" +
@@ -204,7 +205,7 @@ function initTable() {
                 count++;
                 busNumber = public_json.data[i].busnumber;
                 co2sum = co2sum + parseInt(public_json.data[i].senco2)
-                co2Number = co2sum / public_json.data.length
+                co2Number = co2sum / count;
                 console.log(co2sum);
                 passNumber = public_json.data[i].passenger;
                 console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
