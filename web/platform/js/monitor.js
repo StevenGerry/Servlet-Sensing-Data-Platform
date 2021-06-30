@@ -190,7 +190,7 @@ function initTable() {
             var now =  new Date();
             var TTL = now - datatimestamp;
             console.log(TTL.toString());
-            if (TTL <= 500000) {
+            if (TTL <= 588000) {
                 HTML += "<tr>\n" +
                     "            <td>" + public_json.data[i].busnumber + "</td>\n" +
                     "            <td>" + public_json.data[i].timeline + "</td>\n" +
