@@ -80,8 +80,8 @@ public class SearchBusServlet extends HttpServlet {
 	        result.put("success", true);  
 	        result.put("businfo", businfo); 
 			
-			//String sql = "select TOP(20) data_buspassenger.uuid,data_buspassenger.busnumber,data_buspassenger.timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2,data_buspassenger.passenger from data_buspassenger,data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') and data_buspassenger.uuid=data_co2sensors.uuid order by timeline DESC ";
-	        String sql = "select c.busnumber,b.*,c.passenger from (SELECT sensorid, max(timeline) as timeline from data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') group by sensorid) a, data_co2sensors b,data_buspassenger c where a.sensorid = b.sensorid and a.timeline = b.timeline and c.uuid = b.uuid order by timeline DESC";
+			//String sql = "select TOP(100) data_buspassenger.uuid,data_buspassenger.busnumber,data_buspassenger.timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2,data_buspassenger.passenger from data_buspassenger,data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') and data_buspassenger.uuid=data_co2sensors.uuid order by timeline DESC ";
+	        String sql = "select TOP(100) c.busnumber,b.*,c.passenger from (SELECT sensorid, max(timeline) as timeline from data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') group by sensorid) a, data_co2sensors b,data_buspassenger c where a.sensorid = b.sensorid and a.timeline = b.timeline and c.uuid = b.uuid order by timeline DESC";
 	        JSONArray jsonArray = new JSONArray();
 	        try {
 				ResultSet rs = null;
