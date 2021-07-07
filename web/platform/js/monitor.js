@@ -190,7 +190,7 @@ function initTable() {
             var now =  new Date();
             var TTL = now - datatimestamp;
             console.log(TTL.toString());
-            if (TTL <= 600000 && public_json.data[i].senco2 > 0) {
+            if (TTL <= 600000 && public_json.data[i].senco2 > 0 && public_json.data[i].sensignal > 50) {
                 HTML += "<tr>\n" +
                     "            <td>" + public_json.data[i].busnumber + "</td>\n" +
                     "            <td>" + public_json.data[i].timeline + "</td>\n" +
@@ -210,12 +210,44 @@ function initTable() {
                 passNumber = public_json.data[i].passenger;
                 console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
             }
-            else if (TTL <= 600000)
+            else if (TTL <= 600000 && public_json.data[i].senco2 > 0) {
+                HTML += "<tr>\n" +
+                    "            <td>" + public_json.data[i].busnumber + "</td>\n" +
+                    "            <td>" + public_json.data[i].timeline + "</td>\n" +
+                    "            <td>" + public_json.data[i].sensorid + "</td>\n" +
+                    "            <td bgcolor=\"#ff8c00\">" + public_json.data[i].sensignal + "</td>\n" +
+                    "            <td>" + public_json.data[i].senbattery + "</td>\n" +
+                    "            <td>" + public_json.data[i].sentemp + "</td>\n" +
+                    "            <td>" + public_json.data[i].senhumi + "</td>\n" +
+                    "            <td>" + public_json.data[i].senco2 + "</td>\n" +
+                    "            <td>" + public_json.data[i].passenger + "</td>\n" +
+                    "            <td>" + public_json.businfo + "</td>\n";
+                count++;
+                busNumber = public_json.data[i].busnumber;
+                co2sum = co2sum + parseInt(public_json.data[i].senco2)
+                co2Number = co2sum / count;
+                console.log(co2sum);
+                passNumber = public_json.data[i].passenger;
+                console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
+            }
+            else if (TTL <= 600000 && public_json.data[i].sensignal > 50)
                 HTML += "<tr>\n" +
                     "            <td>" + public_json.data[i].busnumber + "</td>\n" +
                     "            <td>" + public_json.data[i].timeline + "</td>\n" +
                     "            <td bgcolor=\"#FF0000\">" + public_json.data[i].sensorid + "</td>\n" +
                     "            <td>" + public_json.data[i].sensignal + "</td>\n" +
+                    "            <td>" + public_json.data[i].senbattery + "</td>\n" +
+                    "            <td>" + public_json.data[i].sentemp + "</td>\n" +
+                    "            <td>" + public_json.data[i].senhumi + "</td>\n" +
+                    "            <td bgcolor=\"#FF0000\">" + public_json.data[i].senco2 + "</td>\n" +
+                    "            <td>" + public_json.data[i].passenger + "</td>\n" +
+                    "            <td>" + public_json.businfo + "</td>\n";
+            else if (TTL <= 600000)
+                HTML += "<tr>\n" +
+                    "            <td>" + public_json.data[i].busnumber + "</td>\n" +
+                    "            <td>" + public_json.data[i].timeline + "</td>\n" +
+                    "            <td bgcolor=\"#FF0000\">" + public_json.data[i].sensorid + "</td>\n" +
+                    "            <td bgcolor=\"#ff8c00\">" + public_json.data[i].sensignal + "</td>\n" +
                     "            <td>" + public_json.data[i].senbattery + "</td>\n" +
                     "            <td>" + public_json.data[i].sentemp + "</td>\n" +
                     "            <td>" + public_json.data[i].senhumi + "</td>\n" +
