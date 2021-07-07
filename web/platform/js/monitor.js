@@ -190,7 +190,7 @@ function initTable() {
             var now =  new Date();
             var TTL = now - datatimestamp;
             console.log(TTL.toString());
-            if (TTL <= 588000) {
+            if (TTL <= 600000 && public_json.data[i].senco2 > 0) {
                 HTML += "<tr>\n" +
                     "            <td>" + public_json.data[i].busnumber + "</td>\n" +
                     "            <td>" + public_json.data[i].timeline + "</td>\n" +
@@ -210,6 +210,18 @@ function initTable() {
                 passNumber = public_json.data[i].passenger;
                 console.log(busNumber.toString() + co2Number.toString() + passNumber.toString());
             }
+            else if (TTL <= 600000)
+                HTML += "<tr>\n" +
+                    "            <td>" + public_json.data[i].busnumber + "</td>\n" +
+                    "            <td>" + public_json.data[i].timeline + "</td>\n" +
+                    "            <td bgcolor=\"#FF0000\">" + public_json.data[i].sensorid + "</td>\n" +
+                    "            <td>" + public_json.data[i].sensignal + "</td>\n" +
+                    "            <td>" + public_json.data[i].senbattery + "</td>\n" +
+                    "            <td>" + public_json.data[i].sentemp + "</td>\n" +
+                    "            <td>" + public_json.data[i].senhumi + "</td>\n" +
+                    "            <td bgcolor=\"#FF0000\">" + public_json.data[i].senco2 + "</td>\n" +
+                    "            <td>" + public_json.data[i].passenger + "</td>\n" +
+                    "            <td>" + public_json.businfo + "</td>\n";
             else
             {
                 console.log("ERR: Out Lifetime");
