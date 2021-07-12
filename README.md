@@ -18,6 +18,8 @@ Server Platform : Tomcat 7.0
 
 3.Show in the webpage as tables and graphics.  --Finished
 
+4.Low Signal and Data Alarm.  --Finished
+
 ## TEST WEBSITE
 http://bus.hwhhome.net:8080/platform/index.html
 
