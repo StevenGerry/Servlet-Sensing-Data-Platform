@@ -6,12 +6,10 @@ import datetime
 import argparse
 import os
 import sys
-import urllib.request
-import json
-import com
+#import com
 
 fCOM = "/dev/ttyUSB0"     # for Linux
-#fCOM = "COM18"                  # for Windows
+#fCOM = "COM22"                  # for Windows
 fDir = "./data/"
 
 # データ定義
@@ -40,6 +38,8 @@ def getData(fData):
             # データ取得する
             try:
                 line = fdev.readline().decode('utf-8')
+                if (0 < len(line)):
+                    test = line
                 if (20 < len(line)):
                     fData.clearData()
                     dList = line.split(":")
@@ -48,7 +48,7 @@ def getData(fData):
                     fData.fbat = int(dList[7].lstrip("bat="))/1000
                     fData.ftmp = int(dList[10].lstrip("tm="))/10
                     fData.fhum = int(dList[11].lstrip("hu="))/10
-                    fData.fco2 = int(dList[12].lstrip("at=").rstrip())
+                    fData.fco2 = int(dList[12].lstrip("co2=").rstrip())
                     saveData(fData)
                     # データを送信
                     sendCloud(fData)
@@ -56,7 +56,7 @@ def getData(fData):
                 # ドングルが抜き差しされた場合を想定…
                 fdev = setDevice()
                 pass
-
+        
 
 def setDevice():
     try:
@@ -69,10 +69,8 @@ def setDevice():
 def main():
     # データオブジェクトの生成
     fData = dataInfo()
-    # データを取得    
+    # データを取得（書き込み・クラウド送信）    
     getData(fData)
-    # データを送信
-    # sendData(fData)
 
 
 def saveData(fData):
@@ -80,44 +78,16 @@ def saveData(fData):
     ldir = fDir + dt_now.strftime('/%Y/%Y-%m-%d/')
     os.makedirs(ldir, exist_ok=True)
     fName = dt_now.strftime('TW_CO2-%Y-%m-%d-') + str(fData.fids) + ".csv"
-    fdata = dt_now.strftime('%Y-%m-%d %H:%M:%S')  + ","
-    fdata += str(fData.fids) + ","
-    fdata += str(fData.feq) + ","
-    fdata += str(fData.fbat) + ","
-    fdata += str(fData.ftmp) + ","
-    fdata += str(fData.fhum) + ","
-    fdata += str(fData.fco2)
-    fdata += "\n"
-    file = open('Passenger.dat','r')
-    passenger = file.readline()
-    print("==================================================")
-    print("Passenger:="+passenger)
-    jsonx = {
-        "sensor": [
-            {
-                "timeline":dt_now.strftime('%Y-%m-%d %H:%M:%S'),
-                "sensorid":str(fData.fids),
-                "sensignal":str(fData.feq),
-                "senbattery":str(fData.fbat),
-                "sentemp":str(fData.ftmp),
-                "senhumi":str(fData.fhum),
-                "senco2":str(fData.fco2),
-                "passengers":passenger,
-                "busnumber":"SHOUNAN330A7040"
-            }
-        ]
-    }
-    data = json.dumps(jsonx)
-    data = str(data)
-    data = data.encode('utf-8')
-    print(data)
-    if fData.fco2>=0:
-    	headers = {'Content-Type':'application/json'}
-    	request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
-    	response = urllib.request.urlopen(request)
-    	print(response.read())
+    wdata = dt_now.strftime('%Y-%m-%d %H:%M:%S')  + ","
+    wdata += str(fData.fids) + ","
+    wdata += str(fData.feq) + ","
+    wdata += str(fData.fbat) + ","
+    wdata += str(fData.ftmp) + ","
+    wdata += str(fData.fhum) + ","
+    wdata += str(fData.fco2)
+    wdata += "\n"
     with open(ldir + fName, mode='a') as f:
-        f.write(fdata)
+        f.write(wdata)
 
 
 def sendCloud(fData):
@@ -129,11 +99,6 @@ def sendCloud(fData):
     sData.append(fData.fbat)
     sData.append(fData.feq)
     com.postData(sData, dt_now, str(fData.fids))
-
-
-def sendData(fData):
-    # ここにクラウド送信プログラムを入れる...
-    pass
 
 
 if __name__ == '__main__':

@@ -6,9 +6,6 @@ import datetime
 import argparse
 import os
 import sys
-import urllib.request
-import json
-import com
 
 fCOM = "/dev/ttyUSB0"     # for Linux
 #fCOM = "COM18"                  # for Windows
@@ -50,13 +47,11 @@ def getData(fData):
                     fData.fhum = int(dList[11].lstrip("hu="))/10
                     fData.fco2 = int(dList[12].lstrip("at=").rstrip())
                     saveData(fData)
-                    # データを送信
-                    sendCloud(fData)
             except:
                 # ドングルが抜き差しされた場合を想定…
                 fdev = setDevice()
                 pass
-
+        
 
 def setDevice():
     try:
@@ -88,47 +83,8 @@ def saveData(fData):
     fdata += str(fData.fhum) + ","
     fdata += str(fData.fco2)
     fdata += "\n"
-    file = open('Passenger.dat','r')
-    passenger = file.readline()
-    print("==================================================")
-    print("Passenger:="+passenger)
-    jsonx = {
-        "sensor": [
-            {
-                "timeline":dt_now.strftime('%Y-%m-%d %H:%M:%S'),
-                "sensorid":str(fData.fids),
-                "sensignal":str(fData.feq),
-                "senbattery":str(fData.fbat),
-                "sentemp":str(fData.ftmp),
-                "senhumi":str(fData.fhum),
-                "senco2":str(fData.fco2),
-                "passengers":passenger,
-                "busnumber":"SHOUNAN330A7040"
-            }
-        ]
-    }
-    data = json.dumps(jsonx)
-    data = str(data)
-    data = data.encode('utf-8')
-    print(data)
-    if fData.fco2>=0:
-    	headers = {'Content-Type':'application/json'}
-    	request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
-    	response = urllib.request.urlopen(request)
-    	print(response.read())
     with open(ldir + fName, mode='a') as f:
         f.write(fdata)
-
-
-def sendCloud(fData):
-    dt_now = datetime.datetime.now()
-    sData = []
-    sData.append(fData.fco2)
-    sData.append(fData.ftmp)
-    sData.append(fData.fhum)
-    sData.append(fData.fbat)
-    sData.append(fData.feq)
-    com.postData(sData, dt_now, str(fData.fids))
 
 
 def sendData(fData):
