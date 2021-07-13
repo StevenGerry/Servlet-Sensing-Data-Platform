@@ -112,10 +112,13 @@ def saveData(fData):
     data = data.encode('utf-8')
     print(data)
     if fData.fco2>=0:
-    	headers = {'Content-Type':'application/json'}
-    	request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
-    	response = urllib.request.urlopen(request,timeout=1.0)
-    	print(response.read())
+        try:
+    	    headers = {'Content-Type':'application/json'}
+    	    request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
+    	    response = urllib.request.urlopen(request,timeout=1.0)
+    	    print(response.read())
+        except Exception as e:
+            print(e)
     with open(ldir + fName, mode='a') as f:
         f.write(fdata)
 
