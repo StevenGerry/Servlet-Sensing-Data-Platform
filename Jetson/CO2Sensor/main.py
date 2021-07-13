@@ -114,7 +114,7 @@ def saveData(fData):
     if fData.fco2>=0:
     	headers = {'Content-Type':'application/json'}
     	request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
-    	response = urllib.request.urlopen(request)
+    	response = urllib.request.urlopen(request,timeout=1.0)
     	print(response.read())
     with open(ldir + fName, mode='a') as f:
         f.write(fdata)
