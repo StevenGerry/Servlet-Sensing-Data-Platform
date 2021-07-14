@@ -122,9 +122,10 @@ def saveData(fData):
     	    print(response.read(),file=f_log)
         except Exception as e:
             print(e,file=f_log)
+    if fData.fco2 == 0:
+        print("Alert: Zero Data")
     with open(ldir + fName, mode='a') as f:
         f.write(fdata)
-
 
 def sendCloud(fData):
     dt_now = datetime.datetime.now()
