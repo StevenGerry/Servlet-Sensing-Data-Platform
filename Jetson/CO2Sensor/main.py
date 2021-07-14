@@ -110,15 +110,18 @@ def saveData(fData):
     data = json.dumps(jsonx)
     data = str(data)
     data = data.encode('utf-8')
+    f_log = open("data.log","a+")
     print(data)
+    print(data,file=f_log)
     if fData.fco2>=0:
         try:
     	    headers = {'Content-Type':'application/json'}
     	    request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
     	    response = urllib.request.urlopen(request,timeout=1.0)
     	    print(response.read())
+    	    print(response.read(),file=f_log)
         except Exception as e:
-            print(e)
+            print(e,file=f_log)
     with open(ldir + fName, mode='a') as f:
         f.write(fdata)
 
