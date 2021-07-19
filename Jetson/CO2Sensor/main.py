@@ -129,7 +129,6 @@ def saveData(fData):
     with open(ldir + fName, mode='a') as f:
         f.write(fdata)
 
-
 def sendCloud(fData):
     dt_now = datetime.datetime.now()
     sData = []
