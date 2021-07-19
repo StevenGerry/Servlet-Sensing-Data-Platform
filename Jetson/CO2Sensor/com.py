@@ -39,7 +39,8 @@ def _wifi(fJSON):
     import json
     import urllib.request, json
 
-    fURL = "http://160.16.94.140/sensorBoxKanachu/post/putData.php"
+    # fURL = "http://160.16.94.140/sensorBoxKanachu/post/putData.php"
+    fURL = "http://160.16.94.140/sensorBoxKanachuGB/post/putData.php"
     fMethod = "POST"
     fHeaders = {"Content-Type" : "application/json"}
     fJSON = fJSON.replace('\\', '')

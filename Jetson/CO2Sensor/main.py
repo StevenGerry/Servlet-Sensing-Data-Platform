@@ -9,6 +9,7 @@ import sys
 import urllib.request
 import json
 import com
+import correction
 
 fCOM = "/dev/ttyUSB0"     # for Linux
 #fCOM = "COM18"                  # for Windows
@@ -49,6 +50,7 @@ def getData(fData):
                     fData.ftmp = int(dList[10].lstrip("tm="))/10
                     fData.fhum = int(dList[11].lstrip("hu="))/10
                     fData.fco2 = int(dList[12].lstrip("at=").rstrip())
+                    correction.getCorrectionData(fData)
                     saveData(fData)
                     # データを送信
                     sendCloud(fData)
@@ -110,12 +112,20 @@ def saveData(fData):
     data = json.dumps(jsonx)
     data = str(data)
     data = data.encode('utf-8')
+    f_log = open("data.log","a+")
     print(data)
+    print(data,file=f_log)
     if fData.fco2>=0:
-    	headers = {'Content-Type':'application/json'}
-    	request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
-    	response = urllib.request.urlopen(request)
-    	print(response.read())
+        try:
+    	    headers = {'Content-Type':'application/json'}
+    	    request = urllib.request.Request(url='http://bus.hwhhome.net:8080/data',headers=headers,data=data,method='POST')
+    	    response = urllib.request.urlopen(request,timeout=1.0)
+    	    print(response.read())
+    	    print(response.read(),file=f_log)
+        except Exception as e:
+            print(e,file=f_log)
+    if fData.fco2 == 0:
+        print("Alert: Zero Data")
     with open(ldir + fName, mode='a') as f:
         f.write(fdata)
 
