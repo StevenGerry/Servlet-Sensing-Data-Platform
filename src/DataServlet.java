@@ -27,9 +27,9 @@ public class DataServlet extends HttpServlet {
 	    String acceptjson = "";
 	    //SQL Connection
 	    String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=***";
+		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=KANACHU";
 		String userName = "sa";
-		String userPwd = "******";
+		String userPwd = "p#uK2eW!";
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String time = new SimpleDateFormat("hh:mm:ss").format(new Date());
         String logAPI = "DataServlet";
@@ -82,6 +82,15 @@ public class DataServlet extends HttpServlet {
 	        	senco2[i] = JSenseDataObject.getString("senco2");
 	        	passengers[i] = JSenseDataObject.getString("passengers");
 	        	busnumber[i] = JSenseDataObject.getString("busnumber");
+	        	String sql_confirm = "SELECT sensnumber FROM data_bus WHERE sensnumber = '"+sensorid[i]+"'";
+	        	PreparedStatement stmt_conf = dbConn.prepareStatement(sql_confirm);
+	        	rs = stmt_conf.executeQuery();
+	        	if (!rs.next())
+	        	{
+	        		String sql_upsensor = "INSERT into data_bus VALUES ('"+busnumber[i]+"','"+sensorid[i]+"','NEW')";
+		        	PreparedStatement stmt_upsensor = dbConn.prepareStatement(sql_upsensor);
+		        	stmt_upsensor.executeUpdate();
+	        	}
 	        	String sql_co2 = "insert into data_co2sensors (uuid,timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2) values ('"+uuid[i]+"','"+timeline[i]+"','"+sensorid[i]+"','"+sensignal[i]+"','"+senbattery[i]+"','"+sentemp[i]+"','"+senhumi[i]+"','"+senco2[i]+"')";
 	        	//System.out.println(log+sql_co2);
 	        	PreparedStatement stmt_co2 = dbConn.prepareStatement(sql_co2);
