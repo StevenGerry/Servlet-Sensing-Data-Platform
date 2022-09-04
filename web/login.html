@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>PJ-Kanachu Bus Sensing Platform</title>
+
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.count.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+<script src="js/login.js"></script>
+
+</head>
+<body>
+<div class="login">
+	<h2>「Project Kanachu」Bus Sensing System </h2>
+	<div class="login-top">
+		<h1>System Login</h1>
+		<form id="login" name="login" method="post" action="http://bus.hwhhome.net/login">
+			<input id="login_name" type="text" value="Login Name" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Login Name';}">
+			<input id="login_pass" type="password" value="Password" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = 'Password';}">
+	    </form>
+	    <div class="forgot">
+<!--	    	<a href="#">Pass？</a>-->
+	    	<input id="login_btn" type="submit" value="Login" >
+	    </div>
+	</div>
+	<div class="login-bottom">
+		<h3>ONLY FOR EXPERIMENTAL TESTING</h3>
+	</div>
+</div>	
+<div class="copyright">
+	<p>Copyright 2021-2023 Wenhao Huang, Nakazawa and Okoshi Lab, Keio University All Rights Reserved</p>
+</div>
+
+
+</body>
+</html>

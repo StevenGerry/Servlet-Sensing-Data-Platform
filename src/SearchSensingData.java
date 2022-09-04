@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
  
-public class SearchBusServlet extends HttpServlet {
+public class SearchSensingData extends HttpServlet {
 	/**
 	 * Do the request of search from web page
 	 */
@@ -31,12 +31,12 @@ public class SearchBusServlet extends HttpServlet {
 	    String acceptjson = "";
 	    //SQL Connection
 	    String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=KANACHU";
+		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=KANACHU_TEST";
 		String userName = "sa";
 		String userPwd = "p#uK2eW!";
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String time = new SimpleDateFormat("hh:mm:ss").format(new Date());
-        String logAPI = "SearchBusServlet";
+        String logAPI = "SearchSensingData";
         String log = date + " " + time + "-" + logAPI + "-";
 		Connection dbConn = null;
 		try
@@ -61,16 +61,16 @@ public class SearchBusServlet extends HttpServlet {
 	        br.close();
 	        acceptjson = sb.toString();
 	        JSONObject raw_JsonData = JSONObject.parseObject(acceptjson);
-	        String bus_id = raw_JsonData.getString("search");
+	        String bus_id = raw_JsonData.getString("SEARCH_BUS_NUMBER");
 	        String businfo = "";
 			try {
-				String sql_bus = "select businfo from data_bus where busnumber = '"+bus_id+"'";
+				String sql_bus = "SELECT INFO FROM BUS_DATA WHERE BUS_NUMBER = '"+bus_id+"'";
 				ResultSet rs_bus = null;
 				PreparedStatement stmt_bus = null;
 				stmt_bus = dbConn.prepareStatement(sql_bus);
 				rs_bus = stmt_bus.executeQuery();
 				while(rs_bus.next()) {
-					businfo = rs_bus.getString("businfo");
+					businfo = rs_bus.getString("INFO");
 					System.out.println(businfo);
 				}
 			} catch (SQLException e) {
@@ -79,10 +79,10 @@ public class SearchBusServlet extends HttpServlet {
 			
 			JSONObject result = new JSONObject();  
 	        result.put("success", true);  
-	        result.put("businfo", businfo); 
+	        result.put("INFO", businfo); 
 			
-			//String sql = "select TOP(100) data_buspassenger.uuid,data_buspassenger.busnumber,data_buspassenger.timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2,data_buspassenger.passenger from data_buspassenger,data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') and data_buspassenger.uuid=data_co2sensors.uuid order by timeline DESC ";
-	        String sql = "select TOP(60) c.busnumber,b.*,c.passenger from (SELECT sensorid, max(timeline) as timeline from data_co2sensors where sensorid in (select sensnumber from data_bus where busnumber = '"+bus_id+"') group by sensorid) a, data_co2sensors b,data_buspassenger c where a.sensorid = b.sensorid and a.timeline = b.timeline and c.uuid = b.uuid order by timeline DESC";
+	        //SELECT TOP(50) b.* FROM (SELECT IDENTIFIER, MAX(DATETIME) AS DATETIME FROM SENSOR_DATA WHERE IDENTIFIER IN (SELECT IDENTIFIER FROM BUS_DATA WHERE BUS_NUMBER = '"+bus_id+"') GROUP BY IDENTIFIER) a, SENSOR_DATA b WHERE a.IDENTIFIER = b.IDENTIFIER AND a.DATETIME = b.DATETIME ORDER BY b.DATETIME DESC
+			String sql = "SELECT TOP(50) b.* FROM (SELECT IDENTIFIER, MAX(DATETIME) AS DATETIME FROM SENSOR_DATA WHERE IDENTIFIER IN (SELECT IDENTIFIER FROM BUS_DATA WHERE BUS_NUMBER = '"+bus_id+"') GROUP BY IDENTIFIER) a, SENSOR_DATA b WHERE a.DATETIME = b.DATETIME AND BUS_NUMBER = '"+bus_id+"' ORDER BY b.DATETIME DESC";
 	        JSONArray jsonArray = new JSONArray();
 	        try {
 				ResultSet rs = null;
@@ -92,16 +92,14 @@ public class SearchBusServlet extends HttpServlet {
 				int i=0;
 				while(rs.next()) {
 					 JSONObject sensor = new JSONObject();  
-					 sensor.put("uuid", rs.getString("uuid")); 
-					 sensor.put("busnumber", rs.getString("busnumber"));  
-					 sensor.put("timeline", rs.getString("timeline"));  
-				     sensor.put("sensorid", rs.getString("sensorid"));
-				     sensor.put("sensignal", rs.getString("sensignal"));
-				     sensor.put("senbattery", rs.getString("senbattery"));
-				     sensor.put("sentemp", rs.getString("sentemp"));
-				     sensor.put("senhumi", rs.getString("senhumi"));
-				     sensor.put("senco2", rs.getString("senco2"));
-				     sensor.put("passenger", rs.getString("passenger"));
+					 sensor.put("UUID", rs.getString("UUID")); 
+					 sensor.put("BUS_NUMBER", rs.getString("BUS_NUMBER"));  
+					 sensor.put("DATETIME", rs.getString("DATETIME"));  
+				     sensor.put("IDENTIFIER", rs.getString("IDENTIFIER"));
+				     sensor.put("SENSOR_STATUS", rs.getString("SENSOR_STATUS"));
+				     sensor.put("TEMPERATURE", rs.getString("TEMPERATURE"));
+				     sensor.put("HUMIDITY", rs.getString("HUMIDITY"));
+				     sensor.put("CO2", rs.getString("CO2"));
 				     jsonArray.add(i++, sensor);
 				     //System.out.println(log+""+i+""+jsonArray.toString());	
 				}

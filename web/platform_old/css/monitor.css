@@ -1,0 +1,278 @@
+body{
+    width: 100%;
+    height: 100%;
+    background-color: #06182d;
+    background-size: auto;
+    background-size: 100% 100%;
+    position: relative;
+    min-height: 756px;
+    padding: 0px;
+    margin: 0px;
+    font-family: "Microsoft YaHei";
+    user-select: none;
+}
+@font-face{
+    font-family: yjsz;
+    src:url('../fonts/yjsz.ttf');
+}
+.t_header{
+    width: 100%;
+    height: 80px;
+    background: url('../images/header.png') no-repeat;
+    background-size: auto;
+    background-size: 100% 100%;
+    position: relative;
+}
+.t_header span {
+    color: #FFFFFF;
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    left: 6%;
+}
+.t_left_box {
+    position: relative;
+    width: 20%;
+    height: 480px;
+    display: inline-block;
+    text-align: center;
+    left: 1%;
+}
+.t_l_line {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.t_r_line {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.t_mbox {
+    width: 200px;
+    height: 80px;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 25px;
+    /*background: rgba(14, 148, 234, 0.4);*/
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.t_mbox div {
+    font-size: 16px;
+    color: #0e94ea;
+    line-height: 25px;
+    font-weight: 900;
+}
+.t_mbox span {
+    font-family: 'yjsz';
+    color: #00fbfe;
+    text-shadow: 0 0 25px #00fbfe;
+    font-weight: bolder;
+    font-size: 26px;
+}
+.t_table_box {
+    position: relative;
+    width: 98%;
+    min-height: 340px;
+    display: inline-block;
+    text-align: center;
+    left: 1%;
+}
+.commonTable {
+    width: 95%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    color: #FFFFFF;
+    border-right: 1px solid #0e94ea;
+    margin-bottom: 30px;
+    margin-top: 75px;
+}
+.commonTable tbody tr td{
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #0e94ea;
+    border-top: 1px solid #0e94ea;
+    border-left: 1px solid #0e94ea;
+    text-align: center;
+    font-size: 14px;
+    padding: 2px;
+    color: #f2f2f2;
+}
+.commonTable thead tr td{
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid #0e94ea;
+    border-top: 1px solid #0e94ea;
+    border-left: 1px solid #0e94ea;
+    text-align: center;
+    background-color: rgba(14, 148, 234, 0.4);
+    color: #00b3ac;
+    font-weight: bold;
+}
+.commonTable tbody tr:hover{
+    color: #FFFFFF;
+    background-color: rgba(14, 148, 234, 0.4);
+    cursor: pointer;
+}
+.btn-small {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 4px;
+    background-color: #449d44;
+    color: #fff;
+    min-width: 40px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    padding: 3px 5px 3px 5px;
+}
+
+.btn-search {
+    background-color:transparent;
+    border: 2px solid #1AA1FD;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.btn-small:hover {
+    color: #fff;
+    background-color: #398439;
+}
+.btn-red {
+    background-color: #d9534f;
+}
+
+.btn-red:hover {
+    background-color: #d43f3a;
+}
+.btn-cyan {
+    background-color: #59b4c6;
+}
+
+.btn-cyan:hover {
+    background-color: #59b4c6;
+}
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #04918B;
+    background-color: transparent;
+    border-radius: .25em;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .08);
+    width: 300px;
+    color: #FFFFFF;
+    position: absolute;
+    left: 35px;
+    top: 30px;
+}
+#refreshBtn {
+    color: #FFFFFF;
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    z-index: 10;
+}
+.t_top_box {
+    width: 500px;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+    display: inline-block;
+    left: 24%;
+}
+.t_top2_box {
+    width: 38%;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+    display: inline-block;
+    left: 61%;
+    line-height: 100px;
+    text-align: center;
+}
+.t_top2_box .t_mbox2 span {
+    display: inline-block;
+    font-size: 26px;
+    color: #e9f0fb;
+}
+.t_nav {
+    width: 100%;
+    height: 100%;
+}
+ul, h1, h2, h3, h4, h5, h6, p {
+    /*list-style: 0;*/
+    padding: 0;
+    margin: 0;
+}
+.t_nav li span {
+    font-size: 14px;
+    color: #1AA1FD;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 25%;
+}
+.t_nav li {
+    display: inline-block;
+    width: 30%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+}
+#addTj, #updateTj, #deleteTj {
+    font-size: 22px;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 50%;
+
+}
+.t_nav li i {
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    right: -0.2rem;
+    background: url('../images/sper.png') no-repeat;
+    background-size: auto;
+    background-size: 100% 100%;
+}
+.t_bottom_box {
+    width: 75%;
+    height: 380px;
+    overflow: hidden;
+    position: relative;
+    top: -360px;
+    left: 24%;
+}
+.t_mbox i {
+    width: 1px;
+    height: 300%;
+    position: absolute;
+    background: url('../images/sper.png') no-repeat;
+    background-size: 100% 100%;
+    -moz-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    transform:rotate(90deg);
+    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+    top: -40px;
+    left: 100px;
+}
+#bugBtn {
+    font-size:14px;
+    position: absolute;
+    display: none;
+    width: 25px;
+    height: 25px;
+    z-index: 10;
+    right: 100px;
+    top: 32px;
+    background: url('../images/bug.png') no-repeat;
+    cursor: pointer;
+}

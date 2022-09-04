@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
  
-public class DataServlet extends HttpServlet {
+public class ReceiveSensorData extends HttpServlet {
 	/**
 	 * Get data from the edge devices by POSTJSON
 	 */
@@ -27,12 +27,12 @@ public class DataServlet extends HttpServlet {
 	    String acceptjson = "";
 	    //SQL Connection
 	    String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=KANACHU";
+		String dbURL = "jdbc:sqlserver://192.168.3.102:1433;DatabaseName=KANACHU_TEST";
 		String userName = "sa";
 		String userPwd = "p#uK2eW!";
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         String time = new SimpleDateFormat("hh:mm:ss").format(new Date());
-        String logAPI = "DataServlet";
+        String logAPI = "ReceiveSensorData";
         String log = date + " " + time + "-" + logAPI + "-";
 		Connection dbConn = null;
 		ResultSet rs = null;
@@ -52,16 +52,16 @@ public class DataServlet extends HttpServlet {
 	        BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream(), "utf-8"));
 	        StringBuffer sb = new StringBuffer("");
 	        String temp;
-	        String uuid[] = new String[100];
-	        String timeline[] = new String[100];
-	        String sensorid[] = new String[100];
-	        String sensignal[] = new String[100];
-	        String senbattery[] = new String[100];
-	        String sentemp[] = new String[100];
-	        String senhumi[] = new String[100];
-	        String senco2[] = new String[100];
-	        String passengers[] = new String[100];
-	        String busnumber[] = new String[100];
+	        String uuid;
+	        String timeline;
+	        String sensorid;
+	        String sensignal;
+	        String senbattery;
+	        String sentemp;
+	        String senhumi;
+	        String senco2;
+	        String passengers;
+	        String busnumber;
 	        while ((temp = br.readLine()) != null) {
 	            sb.append(temp);
 	        }
@@ -69,38 +69,35 @@ public class DataServlet extends HttpServlet {
 	        acceptjson = sb.toString();
 	        JSONObject raw_JsonData = JSONObject.parseObject(acceptjson);
 	        JSONArray JSensorDataArray = raw_JsonData.getJSONArray("sensor");
-	        for(int i=0;i<JSensorDataArray.size();i++) {
-	        	JSONObject JSenseDataObject = null;
-	        	JSenseDataObject = JSensorDataArray.getJSONObject(i);
-	        	uuid[i] = UUID.randomUUID().toString();
-	        	timeline[i] = JSenseDataObject.getString("timeline");
-	        	sensorid[i] = JSenseDataObject.getString("sensorid");
-	        	sensignal[i] = JSenseDataObject.getString("sensignal");
-	        	senbattery[i] = JSenseDataObject.getString("senbattery");
-	        	sentemp[i] = JSenseDataObject.getString("sentemp");
-	        	senhumi[i] = JSenseDataObject.getString("senhumi");
-	        	senco2[i] = JSenseDataObject.getString("senco2");
-	        	passengers[i] = JSenseDataObject.getString("passengers");
-	        	busnumber[i] = JSenseDataObject.getString("busnumber");
-	        	String sql_confirm = "SELECT sensnumber FROM data_bus WHERE sensnumber = '"+sensorid[i]+"'";
+	        	JSONObject JSenseDataObject = raw_JsonData;
+
+	        	uuid = UUID.randomUUID().toString();
+	        	timeline = JSenseDataObject.getString("DATE")+" "+JSenseDataObject.getString("TIME");
+	            timeline = timeline.replaceAll("/", "-");
+	        	sensorid = JSenseDataObject.getString("IDENTIFIER");
+	        	sensignal = JSenseDataObject.getString("SENSOR_STATUS");
+	        	sentemp = JSenseDataObject.getString("TEMPERATURE1");
+	        	senhumi = JSenseDataObject.getString("HUMIDITY1");
+	        	senco2 = JSenseDataObject.getString("CO2");
+	        	busnumber = "NEW_FINDED";
+	        	String sql_confirm = "SELECT BUS_NUMBER FROM BUS_DATA WHERE SENSOR_ID = '"+sensorid+"'";
 	        	PreparedStatement stmt_conf = dbConn.prepareStatement(sql_confirm);
 	        	rs = stmt_conf.executeQuery();
 	        	if (!rs.next())
 	        	{
-	        		String sql_upsensor = "INSERT into data_bus VALUES ('"+busnumber[i]+"','"+sensorid[i]+"','NEW')";
+	        		String sql_upsensor = "INSERT into BUS_DATA VALUES ('"+busnumber+"','"+sensorid+"','NEW SENSOR ADD INFORMATION')";
 		        	PreparedStatement stmt_upsensor = dbConn.prepareStatement(sql_upsensor);
 		        	stmt_upsensor.executeUpdate();
 	        	}
-	        	String sql_co2 = "insert into data_co2sensors (uuid,timeline,sensorid,sensignal,senbattery,sentemp,senhumi,senco2) values ('"+uuid[i]+"','"+timeline[i]+"','"+sensorid[i]+"','"+sensignal[i]+"','"+senbattery[i]+"','"+sentemp[i]+"','"+senhumi[i]+"','"+senco2[i]+"')";
+	        	else
+	        	{
+	        		busnumber = rs.getString("BUS_NUMBER");
+	        	}
+	        	String sql_co2 = "INSERT INTO SENSOR_DATA VALUES ('"+sensorid+"','"+timeline+"','"+sentemp+"','"+senhumi+"','"+senco2+"','"+sensignal+"','"+busnumber+"','"+uuid+"')";
 	        	//System.out.println(log+sql_co2);
 	        	PreparedStatement stmt_co2 = dbConn.prepareStatement(sql_co2);
 	        	stmt_co2.executeUpdate();
-	        	String sql_passenger = "insert into data_buspassenger (uuid,timeline,busnumber,passenger) "
-	        			+ "values ('"+uuid[i]+"','"+timeline[i]+"','"+busnumber[i]+"','"+passengers[i]+"')";
-	        	//System.out.println(log+sql_passenger);
-	        	PreparedStatement stmt_passenger = dbConn.prepareStatement(sql_passenger);
-	        	stmt_passenger.executeUpdate();
-	        }
+	        	
 	        String jsonStr = "{\"status\":\"success\"}";
 	        System.out.println(log+jsonStr);
 	        response.getWriter().write(jsonStr);

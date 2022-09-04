@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="jp" style="height: 100%">
+
+<head>
+  <title>PJ-Kanachu Bus Sensing Platform</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      /* configure the size of the map */
+      width: 400px;
+      height: 300px;
+    }
+  </style>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div class="header"></div>
+<input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+<label for="openSidebarMenu" class="sidebarIconToggle">
+  <div class="spinner diagonal part-1"></div>
+  <div class="spinner horizontal"></div>
+  <div class="spinner diagonal part-2"></div>
+</label>
+<div id="sidebarMenu">
+  <ul class="sidebarMenuInner">
+    <li>Bus Sensing Platform<span>Keio University</span></li>
+    <li><a href="http://bus.hwhhome.net/main.html" target="_blank">モニタリング</a></li>
+    <li><a href="hhttp://bus.hwhhome.net/sensors.html" target="_blank">バズセンサ情報</a></li>
+    <li><a href="http://bus.hwhhome.net/login.html" target="_blank">ログアウト</a></li>
+    </ul>
+</div>
+<div id='center' class="main center">
+  <div>
+    <div id="bus_list_div" style="float:left; margin-right: 20px;">
+      <table class="busList">
+        <thead><tr><td>車ナンバー：</td></tr></thead>
+        <tbody>
+        <tr><td>Loading...</td></tr>
+        <tr><td><button id="reset">Reset</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="data_area" style="float:left; margin-right: 20px;">
+      <div>
+        <a>追跡中：</a>
+        <a id="sensing_bus">なし</a>
+      </div>
+
+      <div id="pass_num_data">
+        <a>乗客数：</a>
+        <a id="pass_num_show">0</a>
+      </div>
+
+      <div>
+        <a>現在位置：</a>
+        <a id="gps_data">NULL</a>
+      </div>
+
+      <div id="sensor_table">
+        <table class="commonTable"><thead>
+        <tr><td title="車ナンバー">車ナンバー</td>
+          <td title="時間">時間</td>
+          <td title="番号">番号</td>
+          <td title="電波">電波</td>
+          <td title="温度">温度</td>
+          <td title="湿度">湿度</td>
+          <td title="CO2">CO2</td>
+        </tr></thead>
+          <tbody>
+          </tbody></table>
+      </div>
+    </div>
+
+    <div id="map"></div>
+  </div>
+</div>
+
+<span id="localtime" style="font-size:14px; position: absolute; z-index: 10; right: 25px; top:5px;"></span>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/echarts-all.js"></script>
+<script type="text/javascript" src="js/jquery.count.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>

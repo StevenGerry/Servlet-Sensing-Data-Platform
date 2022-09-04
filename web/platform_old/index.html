@@ -1,0 +1,83 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<base th:href="${#request.getContextPath()}+'/'">
+<head>
+    <meta charset="UTF-8">
+    <title>バズセンシングデータプラットフォーム</title>
+    <link rel="stylesheet" type="text/css" href="css/monitor.css"/>
+</head>
+<body>
+<span id="bugBtn" title="プロセスエラーデータ、チェックしてください!" onClick="hideBugBtn('')"></span>
+<span id="localtime" style=" font-size:14px; position: absolute; z-index: 10; right: 25px; top:5px; "></span>
+<span class="btn btn-blue btn-big" id="refreshBtn" title="Update">データ更新</span>
+<div style="height: 620px;">
+    <header class="t_header">
+        <span>バズセンシングデータ</span>
+    </header>
+    <div style="margin-top: 20px;">
+        <div class="t_left_box">
+            <img class="t_l_line" src="images/left_line.png" alt="">
+            <div class="t_mbox">
+                <div>車ナンバー</div>
+                <span id="busNumberArea">0</span>
+                <i></i>
+            </div>
+            <div class="t_mbox">
+                <div>平均CO2</div>
+                <span id="averageCo2Area">0</span>
+                <i></i>
+            </div>
+            <div class="t_mbox">
+                <div>乗客数</div>
+                <span id="passengerArea">0</span>
+                <i></i>
+            </div>
+            <div class="t_mbox">
+                <div>混雑状況</div>
+                <span id="statusArea">---</span>
+            </div>
+            <img class="t_r_line" src="images/right_line.png" alt="">
+        </div>
+        <div class="t_top_box">
+            <img class="t_l_line" src="images/left_line.png" alt="">
+            <ul class="t_nav">
+                <li style="width: 100%">
+                    <input type="text" id="searchBus" value="" placeholder="車ナンバーを検索してみてください" style="width: 50%"/>
+                    <button type="button" id="searchBusBtn" class="btn-search" style="width: 20%;margin-top: 35px;margin-left:45%;">検索</button>
+                </li>
+            </ul>
+            <img class="t_r_line" src="images/right_line.png" alt="">
+        </div>
+        <div class="t_top2_box">
+            <img class="t_l_line" src="images/left_line.png" alt="">
+            <div class="t_mbox2">
+                <span style="color: #00b3ac; float: left; margin-left: 13%;">運行済み：</span>
+                <span id="runTimeTj" style="float: left; margin-left: 5%;"></span>
+            </div>
+            <img class="t_r_line" src="images/right_line.png" alt="">
+        </div>
+        <div class="t_bottom_box">
+            <img class="t_l_line" src="images/left_line.png" alt="">
+            <div class="chart" id="taskSize" style="width: 100%; height:100%;"></div>
+            <img class="t_r_line" src="images/right_line.png" alt="">
+        </div>
+        </div>
+</div>
+<div class="t_table_box">
+    <img class="t_l_line" src="images/left_line.png" alt="">
+    <input type="text" id="searchText" value="" placeholder="検索条件を入力"/>
+    <table class="commonTable">
+        <thead>
+        <td title="序号" colspan="8">no monitor data</td>
+        </thead>
+    </table>
+    <img class="t_r_line" src="images/right_line.png" alt="">
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/echarts-all.js"></script>
+<script type="text/javascript" src="js/jquery.count.min.js"></script>
+<script type="text/javascript" src="js/monitor.js"></script>
+</body>
+</html>
