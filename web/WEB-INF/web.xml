@@ -29,6 +29,19 @@
         <servlet-name>UpdateSensorData</servlet-name>
         <servlet-class>UpdateSensorData</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchBusServlet</servlet-name>
+        <servlet-class>SearchBusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchSensingDataDetail</servlet-name>
+        <servlet-class>SearchSensingDataDetail</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>SearchBusServlet</servlet-name>
+        <url-pattern>/bus</url-pattern>
+    </servlet-mapping> 
     <servlet-mapping>
         <servlet-name>ReceivePassengerData</servlet-name>
         <url-pattern>/push_passenger</url-pattern>
@@ -56,6 +69,10 @@
     <servlet-mapping>
         <servlet-name>UpdateSensorData</servlet-name>
         <url-pattern>/update_sensor</url-pattern>
+    </servlet-mapping> 
+    <servlet-mapping>
+        <servlet-name>SearchSensingDataDetail</servlet-name>
+        <url-pattern>/request_sensordetail</url-pattern>
     </servlet-mapping> 
     
     <welcome-file-list>

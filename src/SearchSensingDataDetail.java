@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
  
-public class SearchSensingData extends HttpServlet {
+public class SearchSensingDataDetail extends HttpServlet {
 	/**
 	 * Do the request of search from web page
 	 */
@@ -61,28 +61,14 @@ public class SearchSensingData extends HttpServlet {
 	        br.close();
 	        acceptjson = sb.toString();
 	        JSONObject raw_JsonData = JSONObject.parseObject(acceptjson);
-	        String bus_id = raw_JsonData.getString("SEARCH_BUS_NUMBER");
-	        String businfo = "";
-			try {
-				String sql_bus = "SELECT INFO FROM BUS_DATA WHERE BUS_NUMBER = '"+bus_id+"'";
-				ResultSet rs_bus = null;
-				PreparedStatement stmt_bus = null;
-				stmt_bus = dbConn.prepareStatement(sql_bus);
-				rs_bus = stmt_bus.executeQuery();
-				while(rs_bus.next()) {
-					businfo = rs_bus.getString("INFO");
-					System.out.println(businfo);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+	        String sensor_id = raw_JsonData.getString("IDENTIFIER");
+	        String datetime = raw_JsonData.getString("DATETIME");
 			
 			JSONObject result = new JSONObject();  
 	        result.put("success", true);  
-	        result.put("INFO", businfo); 
 			
 	        //SELECT TOP(50) b.* FROM (SELECT IDENTIFIER, MAX(DATETIME) AS DATETIME FROM SENSOR_DATA WHERE IDENTIFIER IN (SELECT IDENTIFIER FROM BUS_DATA WHERE BUS_NUMBER = '"+bus_id+"') GROUP BY IDENTIFIER) a, SENSOR_DATA b WHERE a.IDENTIFIER = b.IDENTIFIER AND a.DATETIME = b.DATETIME ORDER BY b.DATETIME DESC
-			String sql = "SELECT TOP(40) b.* FROM (SELECT [IDENTIFIER], MAX(DATETIME) AS DATETIME FROM [KANACHU_TEST].[dbo].[SENSOR_DATA](nolock) WHERE BUS_NUMBER = '"+ bus_id +"' GROUP BY IDENTIFIER) a, [KANACHU_TEST].[dbo].[SENSOR_DATA](nolock) b WHERE a.DATETIME = b.DATETIME AND a.IDENTIFIER = b.IDENTIFIER ORDER BY b.DATETIME DESC";
+			String sql = "SELECT * FROM [dbo].[SENSOR_DATA] WHERE IDENTIFIER = '" + sensor_id + "' AND DATETIME LIKE '" + datetime + "%' ORDER BY DATETIME DESC";
 			JSONArray jsonArray = new JSONArray();
 	        try {
 				ResultSet rs = null;
@@ -111,7 +97,7 @@ public class SearchSensingData extends HttpServlet {
 	        
 	        String Message = result.toJSONString();
 	        String jsonStr = "{\"status\":\"success\"}";
-	        System.out.println(log+"Search_POST:"+bus_id+", RETURN:"+jsonStr);
+	        System.out.println(log+"RETURN:"+jsonStr);
 	        response.getWriter().write(Message);
 	    } catch (Exception e) {
 	    	String jsonStr = "{\"status\":\"error:"+e.toString()+"\"}";
