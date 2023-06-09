@@ -21,7 +21,7 @@ Server Platform : Tomcat 7.0
 4.Low Signal and Data Alarm.  --Finished
 
 ## TEST WEBSITE
-http://bus.hwhhome.net/login.html
+http://bus.hwhhome.net/login.html (OFFLINE NOW because of server maintenance)
 
 ## Project Paper
 Bus Crowdedness Sensing Based on Deep Learning, 
